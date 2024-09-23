@@ -1,7 +1,9 @@
 from pyspark.sql import SparkSession
-from config import configuration
 from typing import List
 import logging
+import os
+from dotenv import load_dotenv
+from pathlib import Path
 
 from plugins.kafkastream_processor import KafkaStreamProcessor
 from plugins.utils.configparser import ConfigParser
@@ -35,8 +37,8 @@ def stream_to_s3(data_list: List[str]) -> None:
                     'org.apache.hadoop:hadoop-aws:3.3.1,'
                     'com.amazonaws:aws-java-sdk:1.11.469') \
             .config('spark.hadoop.fs.s3a.impl', 'org.apache.hadoop.fs.s3a.S3AFileSystem') \
-            .config('spark.hadoop.fs.s3a.access.key', configuration.get('AWS_ACCESS_KEY')) \
-            .config('spark.hadoop.fs.s3a.secret.key', configuration.get('AWS_SECRET_KEY')) \
+            .config('spark.hadoop.fs.s3a.access.key', os.getenv('AWS_ACCESS_KEY')) \
+            .config('spark.hadoop.fs.s3a.secret.key', os.getenv('AWS_SECRET_KEY')) \
             .config('spark.hadoop.fs.s3a.aws.credentials.provider', 'org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider') \
             .getOrCreate()
         
@@ -66,6 +68,9 @@ def stream_to_s3(data_list: List[str]) -> None:
 
 
 if __name__ == '__main__':
+
+    dotenv_path = Path('.env')
+    load_dotenv(dotenv_path = dotenv_path)
 
     try:
         data_list = conf.get_data_name()
