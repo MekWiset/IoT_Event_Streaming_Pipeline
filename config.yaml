@@ -1,0 +1,207 @@
+coordinates:
+
+  England:
+    London:
+      - latitude: 51.5074
+        longitude: -0.1278
+    Birmingham:
+      - latitude: 52.4862
+        longitude: -1.8904
+
+data:
+  vehicle_data:
+    make: 'BMW'
+    model: 'series 3'
+    year: 2024
+    fuel_type: 'Hybrid'
+    direction: 'North-East'
+    speed: # unit: km/hr
+      - min: 10
+        max: 40
+    schema:
+      - column_name: 'id'
+        data_type: StringType
+        nullable: True
+      - column_name: 'deviceId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'timestamp'
+        data_type: TimestampType
+        nullable: True
+      - column_name: 'location'
+        data_type: StringType
+        nullable: True
+      - column_name: 'speed'
+        data_type: DoubleType
+        nullable: True
+      - column_name: 'direction'
+        data_type: StringType
+        nullable: True
+      - column_name: 'make'
+        data_type: StringType
+        nullable: True
+      - column_name: 'model'
+        data_type: StringType
+        nullable: True
+      - column_name: 'year'
+        data_type: IntegerType
+        nullable: True
+      - column_name: 'fuelType'
+        data_type: StringType
+        nullable: True
+
+  gps_data:
+    vehicle_type: None
+    direction: 'North-East'
+    speed: # unit: km/hr
+      - min: 0
+        max: 40
+    schema:
+      - column_name: 'id'
+        data_type: StringType
+        nullable: True
+      - column_name: 'deviceId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'timestamp'
+        data_type: TimestampType
+        nullable: True
+      - column_name: 'speed'
+        data_type: DoubleType
+        nullable: True
+      - column_name: 'direction'
+        data_type: StringType
+        nullable: True
+      - column_name: 'vehicleType'
+        data_type: StringType
+        nullable: True
+
+  traffic_camera_data:
+    camera_id: 'Nikon-Cam123'
+    schema:
+      - column_name: 'id'
+        data_type: StringType
+        nullable: True
+      - column_name: 'deviceId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'cameraId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'location'
+        data_type: StringType
+        nullable: True
+      - column_name: 'timestamp'
+        data_type: TimestampType
+        nullable: True
+      - column_name: 'snapshot'
+        data_type: StringType
+        nullable: True
+
+  weather_data:
+    weather_condition: ['Sunny', 'Cloudy', 'Rain', 'Snow']
+    temperature: # unit: celcius
+      - min: -5
+        max: 26
+    precipitation: # unit: mm
+      - min: 0
+        max: 25
+    wind_speed: # unit: km/hr
+      - min: 0
+        max: 100
+    humidity: # unit: percent
+      - min: 0
+        max: 100
+    airquality_index: # unit: µg/m3
+      - min: 0
+        max: 500
+    schema:
+      - column_name: 'id'
+        data_type: StringType
+        nullable: True
+      - column_name: 'deviceId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'location'
+        data_type: StringType
+        nullable: True
+      - column_name: 'timestamp'
+        data_type: TimestampType
+        nullable: True
+      - column_name: 'temperature'
+        data_type: DoubleType
+        nullable: True
+      - column_name: 'weatherCondition'
+        data_type: StringType
+        nullable: True
+      - column_name: 'precipitation'
+        data_type: DoubleType
+        nullable: True
+      - column_name: 'windSpeed'
+        data_type: StringType
+        nullable: True
+      - column_name: 'humidity'
+        data_type: IntegerType
+        nullable: True
+      - column_name: 'airQualityIndex'
+        data_type: DoubleType
+        nullable: True
+
+  emergency_data:
+    type: ['Accident', 'Fire', 'Medical', 'Police', 'None']
+    status: ['Active', 'Resolved']
+    description: None
+    schema:
+      - column_name: 'id'
+        data_type: StringType
+        nullable: True
+      - column_name: 'deviceId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'incidentId'
+        data_type: StringType
+        nullable: True
+      - column_name: 'type'
+        data_type: StringType
+        nullable: True
+      - column_name: 'timestamp'
+        data_type: TimestampType
+        nullable: True
+      - column_name: 'location'
+        data_type: StringType
+        nullable: True
+      - column_name: 'status'
+        data_type: StringType
+        nullable: True
+      - column_name: 'description'
+        data_type: StringType
+        nullable: True
+
+AWS:
+
+  S3:
+    buckets:
+      spark_streaming:
+        name: 'spark-streaming-data-123'
+        location: 'ap-southeast-2' # Sydney
+    
+    storage_paths:
+      vehicle_data:
+        path: 's3a://spark-streaming-data-123/data/vehicle_data'
+        checkpoint_folder_path: 's3a://spark-streaming-data-123/checkpoints/vehicle_data'
+        
+      gps_data:
+        path: 's3a://spark-streaming-data-123/data/gps_data'
+        checkpoint_folder_path: 's3a://spark-streaming-data-123/checkpoints/gps_data'
+        
+      traffic_camera_data:
+        path: 's3a://spark-streaming-data-123/data/traffic_data'
+        checkpoint_folder_path: 's3a://spark-streaming-data-123/checkpoints/traffic_data'
+        
+      weather_data:
+        path: 's3a://spark-streaming-data-123/data/weather_data'
+        checkpoint_folder_path: 's3a://spark-streaming-data-123/checkpoints/weather_data'
+        
+      emergency_data:
+        path: 's3a://spark-streaming-data-123/data/emergency_data'
+        checkpoint_folder_path: 's3a://spark-streaming-data-123/checkpoints/emergency_data'
