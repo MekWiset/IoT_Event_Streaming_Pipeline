@@ -4,7 +4,7 @@ This project demonstrates a complete end-to-end IoT event streaming pipeline usi
 
 The data is simulated in real-time and ingested into Kafka using a custom Python script, then processed in Spark, and stored in AWS S3. AWS Glue is used for ETL operations, and the data is queried using Athena and loaded into Redshift for analytics.
 
-## Project Architecture
+### Project Architecture:
 ![IoT Event Processing Pipeline Architecture](data_architecture.png)
 
 ## Table of Contents
